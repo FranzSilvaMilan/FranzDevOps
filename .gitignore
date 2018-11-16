@@ -16,6 +16,8 @@
 /build/
 */build/
 /out/
+/.ide/
+*/.ide/
 /logs/
 
 # Package Files #
@@ -32,6 +34,7 @@
 *.html
 *.js
 *.xml
+*.iml
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
