@@ -1,5 +1,6 @@
 #!/bin/bash
 
-sudo apt-get update
-sudo apt-get install openjdk-8-jdk
-sudo apt-get install unzip
+add-apt-repository ppa:openjdk-r/ppa -y
+apt-get update
+apt-get -y install apache2 openjdk-8-jdk
+update-alternatives --config java

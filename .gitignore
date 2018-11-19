@@ -18,6 +18,8 @@
 */.ide/
 /.ide/
 /out/
+/.ide/
+*/.ide/
 /logs/
 
 # Package Files #
