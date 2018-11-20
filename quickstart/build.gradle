@@ -1,11 +1,9 @@
-
-apply plugin: 'jacoco'
-apply plugin: 'java'
-apply plugin: 'eclipse'
-
 plugins {
   id "org.sonarqube" version "2.6.2"
 }
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'eclipse'
 
 version = '1.0'
 jar {
