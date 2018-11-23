@@ -6,23 +6,32 @@ pipeline {
          steps {
            echo 'Building'
 				sh '''
-		chmod +x quickstart/gradlew
-		./quickstart/gradlew clean assemble -p quickstart/
-		'''
+		    chmod +x webapplication/gradlew
+		    ./webapplication/gradlew clean assemble -p webapplication/
+        ./webapplication/gradlew uploadArchives -p webapplication
+		    '''
+        archiveArtifacts artifacts: '**/repos/*.war'
          }
        }
        stage ('Testing') {
          steps {
            echo 'Testing'
-           sh './quickstart/gradlew test -p quickstart'
-           junit '**/build/test-results/test/*.xml'
+           sh './webapplication/gradlew test -p webapplication'
+           junit '**/reports/tests/test/*.html'
          }
        }
-       stage ('Publish') {
+       stage ('Security') {
          steps {
-           echo 'Publishing'
-           sh './quickstart/gradlew uploadArchives -p quickstart'
-           archiveArtifacts artifacts: '**/repos/*.jar'
+           echo 'security..'
+           sh './webapplication/gradlew sonarqube'
+           sh './webapplication/gradlew dependencyCheckAnalyze'
+           archiveArtifacts artifacts: '**/repos/*.html'
+         }
+       }
+       stage ('Deploy') {
+         steps {
+           echo 'Deploying'
+           sh './webapplication/gradlew -b deploy.gradle copyWar'
          }
        }
     }
