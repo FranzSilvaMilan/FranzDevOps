@@ -17,11 +17,11 @@ pipeline {
          steps {
            echo 'Testing'
            sh './webapplication/gradlew test -p webapplication'
-           junit 'build/test-results/test/*.xml'
+           junit '**/test-results/test/*.xml'
         publishHTML([allowMissing: true,
            alwaysLinkToLastBuild: false,
            keepAll: true,
-           reportDir: 'build/reports/tests/test',
+           reportDir: '**/reports/tests/test',
            reportFiles: 'index.html',
            reportTitles: "webApp Report",
            reportName: 'WebAppJunitReport'])
