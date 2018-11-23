@@ -1,6 +1,6 @@
 format_version: 3
 pipelines:
-  dc-quickstart-ci:
+  fs-quickstart-ci:
     group: quiestart
     materials:
       repo:
@@ -63,7 +63,7 @@ pipelines:
                     destination: html
               tabs:
                 OWASP: html/dependency-check-report.html
-  dc-webapplication-ci:
+  fs-webapplication-ci:
     group: webApplication
     materials:
       repo:
