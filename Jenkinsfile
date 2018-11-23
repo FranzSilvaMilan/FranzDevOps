@@ -32,7 +32,7 @@ pipeline {
            echo 'security..'
            sh './webapplication/gradlew sonarqube -p webapplication'
            sh './webapplication/gradlew dependencyCheckAnalyze -p webapplication'
-           archiveArtifacts artifacts: '**/repos/*.html'
+           archiveArtifacts artifacts: '**/repos/tests/test/*.html'
          }
        }
        stage ('Deploy') {
