@@ -78,10 +78,16 @@ pipelines:
               tasks:
                 - exec:
                     working_directory: webapplication
+                    command: ./chmod 
+                    arguments:
+                      - +x 
+                      - webapplication/gradlew
+                - exec:
+                    working_directory: webapplication
                     command: ./gradlew
                     arguments:
                       - clean
-                      - assemble
+                      - assemble                
               artifacts:
                 - build:
                     source: webapplication/build/libs/*.war
