@@ -1,7 +1,7 @@
 format_version: 3
 pipelines:
-  fs-quickstart-ci:
-    group: Quickstart
+  dc-quickstart-ci:
+    group: quiestart
     materials:
       repo:
         git: https://github.com/devops-at07/FranzDevOps.git
@@ -49,7 +49,7 @@ pipelines:
                     working_directory: quickstart
                     command: ./gradlew
                     arguments:
-                      - sonarqube
+                      - sonarqube  
             Owasp:
               tasks:
                 - exec:
@@ -62,9 +62,9 @@ pipelines:
                     source: quickstart/build/reports/**/*
                     destination: html
               tabs:
-                OWASP: html/dependency-check-report.html 
-  fs-webapplication-ci:
-    group: webapplication
+                OWASP: html/dependency-check-report.html
+  dc-webapplication-ci:
+    group: webApplication
     materials:
       repo:
         git: https://github.com/devops-at07/FranzDevOps.git
@@ -87,7 +87,7 @@ pipelines:
                     source: webapplication/build/libs/*.war
                     destination: war
       - Test:
-         jobs:
+          jobs:
             Unit_Test:
               tasks:
                 - exec:
@@ -95,42 +95,45 @@ pipelines:
                     command: ./gradlew
                     arguments:
                       - test
-              artifacts:                
-                - test:
+              artifacts:
+                - build:
                     source: webapplication/build/reports/tests/test/**/*
                     destination: html
+                - test:
+                    source: webapplication/build/test-results/test/*.xml
+                    destination: xml
               tabs:
                 unit_test: html/index.html
       - Security:
-         jobs:
-           Sonarqube:
-             tasks:
-               - exec:
-                   working_directory: webapplication
-                   command: ./gradlew
-                   arguments:
-                     - sonarqube
-           Owasp:
-             tasks:
-               - exec:
-                   working_directory: webapplication
-                   command: ./gradlew
-                   arguments:
-                     - dependencyCheckAnalyze
-             artifacts:
-               - build:
-                   source: webapplication/build/reports/**/*
-                   destination: html
-             tabs:
-               OWASP: html/dependency-check-report.html
+          jobs:
+            Sonarqube:
+              tasks:
+                - exec:
+                    working_directory: webapplication
+                    command: ./gradlew
+                    arguments:
+                      - sonarqube 
+            Owasp:
+              tasks:
+                - exec:
+                    working_directory: webapplication
+                    command: ./gradlew
+                    arguments:
+                      - dependencyCheckAnalyze
+              artifacts:
+                - build:
+                    source: webapplication/build/reports/**/*
+                    destination: html
+              tabs:
+                OWASP: html/dependency-check-report.html
       - Deploy:
-         jobs:
-           deploy_gradle:
-             tasks:
-               - exec:
-                  working_directory: webapplication
-                  command: ./gradlew
-                  arguments:
-                   - -b
-                   - deploy.gradle
-                   - copyWar            
+          jobs:
+            Tomcat:
+              tasks:
+                - exec:
+                    working_directory: webapplication
+                    command: ./gradlew
+                    arguments:
+                      - -b
+                      - deploy.gradle
+                      - copyWar             
