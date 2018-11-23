@@ -50,6 +50,19 @@ pipelines:
                     command: ./gradlew
                     arguments:
                       - sonarqube
+            Owasp:
+              tasks:
+                - exec:
+                    working_directory: quickstart
+                    command: ./gradlew
+                    arguments:
+                      - dependencyCheckAnalyze
+              artifacts:
+                - build:
+                    source: quickstart/build/reports/**/*
+                    destination: html
+              tabs:
+                OWASP: html/dependency-check-report.html 
   fs-webapplication-ci:
     group: webapplication
     materials:
@@ -74,7 +87,7 @@ pipelines:
                     source: webapplication/build/libs/*.war
                     destination: war
       - Test:
-          jobs:
+         jobs:
             Unit_Test:
               tasks:
                 - exec:
@@ -110,7 +123,7 @@ pipelines:
                    destination: html
              tabs:
                OWASP: html/dependency-check-report.html
-     - Deploy:
+      - Deploy:
          jobs:
            deploy_gradle:
              tasks:
@@ -120,4 +133,4 @@ pipelines:
                   arguments:
                    - -b
                    - deploy.gradle
-                   - copyWar
+                   - copyWar            
